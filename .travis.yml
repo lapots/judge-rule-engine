@@ -2,9 +2,6 @@ language: java
 jdk: oraclejdk8
 dist: trusty
 sudo: true
-env:
-  global:
-    secure: rB4klVqhUBakrp+IAqYZpL2OnFDDz62XUjWRQzzlCdcrHl5p8nuUAk9t6SCFEJh16hLJnol3Ub4bzjYm56tXpHrttXkze3yZb/5NdILL7ro3vfPTHoGmTdwdR3hGvWXrakF0zsz6fsu9I+ex8cLJSIV3RDisNmkF1JknT9+pMsuipKhytlQjsncUfyVCE1rbpeeLV2vDYXWabO/A3uL0gJrQZrSnqhhwxhQ/2riVssQjdUXrqoU3kjO0QzO2i+gsYLFp7spd+/0BwoyKn07FrbnQpmcN1GIkUdCq+7A1RccQ0yG5ymkg09AMmdirlffkdPIroeqwRtjgifYyYxczpXNC4+JeTXmDHLkXigtQRzw75n5ANRTCPvtsg0VxAeDEvI1BCFzCBPF7GQ0rLq599DKSr0a+Eh7pO9nYrmv898WSdrMCynJV1dpG8VLmsHodxcKGIgVWt6vHu7tAnsJaH1fDmAhnHFYYJRqbe4K/llrPTAnMyQLjeWwUiWJQGbmlHQUnauTmQsCLSIGEYD0sFZPFheVxSEhlRb1Uxw8qnREFhTYY/FJplwskun+Lic7EUotQuVSF2taEbO8FiJuLkcVaNU8ANFDaUUmLxPzxyR5g+MRGI3a18kQtGwVMlELJZp7BqSuG45DNeXFaxuHUL7hyxjke2fM8RIizJYDCpaA=
 before_deploy:
   - curl -fSL "https://releases.hashicorp.com/terraform/0.11.3/terraform_0.11.3_linux_amd64.zip" -o terraform.zip
   - sudo unzip terraform.zip -d /opt/terraform
@@ -13,7 +10,10 @@ before_deploy:
 deploy:
   - provider: script
     skip_cleanup: true
-    script: "./deploy.sh"
+    script: bash deploy.sh
     on:
       repo: lapots/judge-rule-engine
       branch: master
+env:
+  global:
+    secure: g7mSMZ4s/1TB6+VCKYgyu40zyyW+76bInTutWAoSKkno/QWJmyVd1Qjn2F3YFth8FCsnzktA8PH/p4k3jQ/BhJSKrtO97LKDv0dSxzxDsYMN5+4kU6zzWfttSGZFFamOFRyN+ck2fu+zRmSRHP4/r4F+UJbVCjsjyi4cBpPWpXtoReLmjVk8SDTgGqN+6BuHMEAziHBGPxqP+MRxCikhCu/yJM4l2NMj8fInVXEBL2Udk+HloGJ4DuLPpC9pPLUd6zphLRiGqGs4uXI7XScnxzRmyXgFcCfEz4TxXvG+nhdh5Rav0Q+7FOecsZ8kzaXKGkLazCTrSz8sR8WJ7sTaWVaQOkHcVXHYPiT4ABu3NAvecB4/4m50Epklk7ycHowW6eVHCnPSPhSVEGxsRtmKEwR+M7N6Hj1/HFpe+gGFxfVYc4rqDid7nv4OGDRBUCQSxRvDLOocuBzPeUdU95M5dc/5FhJp3+GZ/sOtI5hviZPl+Mou/Bhe+LnCy/7A6TcyKX9GIQFj+Wxv5RYPaawqWs7KJYV01Vv62CigPk3c6RwVzGn4wkF2M8ZXF00lqtjLzVsTprURMdt+aWSoulBCAtDmQgZB3MWzWe2pYL1N5baO3xCA1iFARYt/VPruOvoPrfC4JIE9Y8nj5Di4+vQzDnJD/52GrlRwekWUY3aZh8o=
