@@ -51,6 +51,19 @@ test {
     finalizedBy jacocoTestReport
 }
 
+tasks.withType(FindBugs) {
+    reports {
+        xml.enabled = false
+        html.enabled = true
+    }
+}
+
+tasks.withType(Pmd) {
+    reports {
+        html.enabled = true
+    }
+}
+
 jacocoTestReport {
     reports {
         xml.enabled = true
