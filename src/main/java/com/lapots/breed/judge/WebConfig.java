@@ -10,9 +10,16 @@ import static org.springframework.web.reactive.function.BodyInserters.fromPublis
 import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
+/**
+ * Configuration for router functions.
+ */
 @Configuration
 public class WebConfig {
 
+    /**
+     * Router function.
+     * @return string
+     */
     @Bean
     public RouterFunction<?> helloRoute() {
         return route(GET("/judge/router/hello"),

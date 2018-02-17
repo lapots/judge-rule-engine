@@ -13,9 +13,14 @@ buildscript {
 }
 
 apply plugin: 'java'
+apply plugin: 'groovy'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'jacoco'
+apply plugin: 'checkstyle'
+apply plugin: 'findbugs'
+apply plugin: 'pmd'
 
 group = 'com.lapots.breed.judge'
 version = '0.0.1-SNAPSHOT'
@@ -31,5 +36,13 @@ repositories {
 dependencies {
     compile('org.springframework.boot:spring-boot-starter')
     compile('org.springframework.boot:spring-boot-starter-webflux')
+
+    testCompile('org.codehaus.groovy:groovy-all')
+    testCompile('org.spockframework:spock-core:1.1-groovy-2.4')
+    testCompile('org.spockframework:spock-spring:1.1-groovy-2.4')
     testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+checkstyle {
+    configFile = file('sun_checks.xml')
 }
