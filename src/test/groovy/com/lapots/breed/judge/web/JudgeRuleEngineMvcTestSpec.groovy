@@ -12,7 +12,7 @@ class JudgeRuleEngineMvcTestSpec extends Specification {
     WebTestClient webClient;
 
     def "mvc mono returns hello"() {
-        expect:
+        expect: "request to router endpoint"
             webClient.get().uri("/judge/rest/hello")
                 .exchange()
                 .expectStatus().isOk()

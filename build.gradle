@@ -37,8 +37,6 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter')
     compile('org.springframework.boot:spring-boot-starter-webflux')
 
-    compileOnly('org.projectlombok:lombok:1.16.20')
-
     testCompile('org.codehaus.groovy:groovy-all')
     testCompile('org.spockframework:spock-core:1.1-groovy-2.4')
     testCompile('org.spockframework:spock-spring:1.1-groovy-2.4')
