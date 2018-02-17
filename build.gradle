@@ -46,3 +46,13 @@ dependencies {
 checkstyle {
     configFile = file('sun_checks.xml')
 }
+
+test {
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true
+    }
+}

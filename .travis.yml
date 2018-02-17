@@ -2,11 +2,17 @@ language: java
 jdk: oraclejdk8
 dist: trusty
 sudo: true
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
 before_deploy:
   - curl -fSL "https://releases.hashicorp.com/terraform/0.11.3/terraform_0.11.3_linux_amd64.zip" -o terraform.zip
   - sudo unzip terraform.zip -d /opt/terraform
   - sudo ln -s /opt/terraform/terraform /usr/bin/terraform
   - rm -f terraform.zip
+  - ./cc-test-reporter format-coverage -d -t jacoco /home/travis/build/lapots/judge-rule-engine/build/reports/jacoco/test/jacocoTestReport.xml
+  - ./cc-test-reporter upload-coverage -d
 deploy:
   - provider: script
     skip_cleanup: true
@@ -16,4 +22,5 @@ deploy:
       branch: master
 env:
   global:
-    secure: g7mSMZ4s/1TB6+VCKYgyu40zyyW+76bInTutWAoSKkno/QWJmyVd1Qjn2F3YFth8FCsnzktA8PH/p4k3jQ/BhJSKrtO97LKDv0dSxzxDsYMN5+4kU6zzWfttSGZFFamOFRyN+ck2fu+zRmSRHP4/r4F+UJbVCjsjyi4cBpPWpXtoReLmjVk8SDTgGqN+6BuHMEAziHBGPxqP+MRxCikhCu/yJM4l2NMj8fInVXEBL2Udk+HloGJ4DuLPpC9pPLUd6zphLRiGqGs4uXI7XScnxzRmyXgFcCfEz4TxXvG+nhdh5Rav0Q+7FOecsZ8kzaXKGkLazCTrSz8sR8WJ7sTaWVaQOkHcVXHYPiT4ABu3NAvecB4/4m50Epklk7ycHowW6eVHCnPSPhSVEGxsRtmKEwR+M7N6Hj1/HFpe+gGFxfVYc4rqDid7nv4OGDRBUCQSxRvDLOocuBzPeUdU95M5dc/5FhJp3+GZ/sOtI5hviZPl+Mou/Bhe+LnCy/7A6TcyKX9GIQFj+Wxv5RYPaawqWs7KJYV01Vv62CigPk3c6RwVzGn4wkF2M8ZXF00lqtjLzVsTprURMdt+aWSoulBCAtDmQgZB3MWzWe2pYL1N5baO3xCA1iFARYt/VPruOvoPrfC4JIE9Y8nj5Di4+vQzDnJD/52GrlRwekWUY3aZh8o=
+  - secure: g7mSMZ4s/1TB6+VCKYgyu40zyyW+76bInTutWAoSKkno/QWJmyVd1Qjn2F3YFth8FCsnzktA8PH/p4k3jQ/BhJSKrtO97LKDv0dSxzxDsYMN5+4kU6zzWfttSGZFFamOFRyN+ck2fu+zRmSRHP4/r4F+UJbVCjsjyi4cBpPWpXtoReLmjVk8SDTgGqN+6BuHMEAziHBGPxqP+MRxCikhCu/yJM4l2NMj8fInVXEBL2Udk+HloGJ4DuLPpC9pPLUd6zphLRiGqGs4uXI7XScnxzRmyXgFcCfEz4TxXvG+nhdh5Rav0Q+7FOecsZ8kzaXKGkLazCTrSz8sR8WJ7sTaWVaQOkHcVXHYPiT4ABu3NAvecB4/4m50Epklk7ycHowW6eVHCnPSPhSVEGxsRtmKEwR+M7N6Hj1/HFpe+gGFxfVYc4rqDid7nv4OGDRBUCQSxRvDLOocuBzPeUdU95M5dc/5FhJp3+GZ/sOtI5hviZPl+Mou/Bhe+LnCy/7A6TcyKX9GIQFj+Wxv5RYPaawqWs7KJYV01Vv62CigPk3c6RwVzGn4wkF2M8ZXF00lqtjLzVsTprURMdt+aWSoulBCAtDmQgZB3MWzWe2pYL1N5baO3xCA1iFARYt/VPruOvoPrfC4JIE9Y8nj5Di4+vQzDnJD/52GrlRwekWUY3aZh8o=
+  - secure: eDMCjJKLDZBiXEkjtKeRlxZYPiiFUGhs7VbXPTvnmyU52unD+sgGXA3EowmDWHiYHMbHzWNZUhwAUTecVnVQtgMOHwwP16xGdBknWn89O5OvaSSDE3NBzKTJp23re3CmXH+gty9tJjNF0wI4G6sfL348syvBnzaFyaRJYYFXCa7we9kTqxmBa4pJbTI5VQUyPRxvmnPNsL+Ao9fIvEUermUgKr3Lw4nV2HiGB23bcpUFJPadmM3V5ZbeBI/dIwtExOjNG3NkxykXYFSOBYQNt9J0uTqQU1lx+s13uVbVUdA+hWSbtPwVPG21LZDncwahJ+adfespd0qSnNzMsuvdRYldmcgP+LYqdXmWBrN3g/TyQY9Osyx5FRm6LQDBMcL5vqGfNr123DTMyDIQMmHZcCg7h6d6BgI/9MbkQUS+JlQNTjaAYde/TsNu958lLAvi/smOT5rjQJ+/F7UUQLLCEYwuXJ7L2P52THfyKAYmvpWABqtMMlOhCXB4LEJtHGGh0Mbxu/AyS6pEo3DKBHwWpnfdc5YDCLSwWc0xSFPdKOZT4M06KcH1YEagszhJTibINvVH0UV1zmUpzFOqdxYMM8BvMoYzYbrpnvQ7pNTmxn+yErtApSjuNhiEAeLyUgonIYx+o3EKWbX3ZO2ZdluSISaJabyQxi6rruLgjj6Ak4g=
