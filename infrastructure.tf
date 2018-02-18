@@ -5,7 +5,7 @@ provider "heroku" {
     api_key = "${var.HEROKU_API_KEY}"
 }
 
-resource "heroku_app" "default" {
+resource "heroku_app" "judge_re" {
     name = "judge-re"
     region = "us"
 
