@@ -8,4 +8,8 @@ provider "heroku" {
 resource "heroku_app" "default" {
     name = "judge-re"
     region = "us"
+
+    buildpacks = [
+        "heroku/java"
+    ]
 }
