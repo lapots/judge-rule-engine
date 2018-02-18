@@ -11,8 +11,8 @@ before_deploy:
   - sudo unzip terraform.zip -d /opt/terraform
   - sudo ln -s /opt/terraform/terraform /usr/bin/terraform
   - rm -f terraform.zip
-  - ./cc-test-reporter format-coverage -d -t jacoco /home/travis/build/lapots/judge-rule-engine/build/reports/jacoco/test/jacocoTestReport.xml
-  - ./cc-test-reporter upload-coverage -d
+  # - ./cc-test-reporter format-coverage -d -t jacoco /home/travis/build/lapots/judge-rule-engine/build/reports/jacoco/test/jacocoTestReport.xml
+  # - ./cc-test-reporter upload-coverage -d
 deploy:
   - provider: script
     skip_cleanup: true
