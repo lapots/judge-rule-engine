@@ -1,8 +1,8 @@
-variable "HEROKU_API_KEY" {}
+variable "heroku_api_key" {}
 
 provider "heroku" {
     email = "sebastrident@gmail.com"
-    api_key = "${var.HEROKU_API_KEY}"
+    api_key = "${var.heroku_api_key}"
 }
 
 resource "heroku_app" "judge_re" {
