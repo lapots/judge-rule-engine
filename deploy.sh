@@ -3,9 +3,9 @@
 set -o errexit -o nounset
 
 echo "terraform actions"
-terraform init
 terraform plan
 terraform destroy -force
+terraform plan
 terraform apply -auto-approve
 
 echo "updating terraform state"
