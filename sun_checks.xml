@@ -85,7 +85,9 @@
         <!-- See http://checkstyle.sf.net/config_javadoc.html -->
         <module name="JavadocMethod"/>
         <module name="JavadocType"/>
-        <module name="JavadocVariable"/>
+        <module name="JavadocVariable">
+            <property name="scope" value="public"/>
+        </module>
         <module name="JavadocStyle"/>
 
         <!-- Checks for Naming Conventions.                  -->
@@ -149,7 +151,7 @@
         <module name="HiddenField"/>
         <module name="IllegalInstantiation"/>
         <module name="InnerAssignment"/>
-        <module name="MagicNumber"/>
+        <!--<module name="MagicNumber"/> --> <!-- TODO: find exclude -->
         <module name="MissingSwitchDefault"/>
         <module name="SimplifyBooleanExpression"/>
         <module name="SimplifyBooleanReturn"/>
@@ -165,8 +167,12 @@
         <!-- Miscellaneous other checks.                   -->
         <!-- See http://checkstyle.sf.net/config_misc.html -->
         <module name="ArrayTypeStyle"/>
-        <module name="FinalParameters"/>
-        <module name="TodoComment"/>
+        <module name="FinalParameters">
+            <property name="ignorePrimitiveTypes" value="true"/>
+        </module>
+        <module name="TodoComment">
+            <property name="format" value="(TODO: )|( FIXME: )"/>
+        </module>
         <module name="UpperEll"/>
 
     </module>
