@@ -10,6 +10,6 @@ resource "heroku_app" "judge_re" {
     region = "us"
 
     buildpacks = [
-        "heroku/java"
+        "heroku/gradle"
     ]
 }
