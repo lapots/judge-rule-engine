@@ -15,10 +15,5 @@ cache:
     - '$HOME/.sonar/cache'
     - '$HOME/.gradle'
     - '.gradle'
-deploy:
-  - provider: script
-    skip_cleanup: true
-    script: bash deploy.sh
-    on:
-      repo: lapots/judge-rule-engine
-      branch: master
+after_success:
+  - ./gradlew jacocoTestReport coveralls

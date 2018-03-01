@@ -1,7 +1,8 @@
 buildscript {
     ext {
         springBootVersion = '2.0.0.RC1'
-        sonarQubePlugin = '2.6.2'
+        sonarQubePluginVersion = '2.6.2'
+        coverallsPluginVersion = '2.8.2'
     }
     repositories {
         mavenCentral()
@@ -9,8 +10,9 @@ buildscript {
         maven { url "https://repo.spring.io/milestone" }
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:${sonarQubePlugin}"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:${sonarQubePluginVersion}"
+        classpath "org.kt3k.gradle.plugin:coveralls-gradle-plugin:${coverallsPluginVersion}"
     }
 }
 
@@ -24,6 +26,7 @@ apply plugin: 'checkstyle'
 apply plugin: 'findbugs'
 apply plugin: 'pmd'
 apply plugin: 'org.sonarqube'
+apply plugin: 'com.github.kt3k.coveralls'
 
 group = 'com.lapots.breed.judge'
 version = '0.0.1-SNAPSHOT'
