@@ -1,8 +1,10 @@
 package com.lapots.breed.judge.service;
 
+import com.lapots.breed.judge.domain.Player;
 import com.lapots.breed.judge.repository.PlayerLevelCacheWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Mono;
 
 /**
  * Service for player rules calculation.
@@ -21,21 +23,18 @@ public class PlayerRuleCalculationService {
         this.levelCache = wrapper;
     }
 
-    /*
-        The idea behind it is this one:
-            if player.exp >= level.exp && player.level != level.exp
-                player.level ++
-                player.exp = level.exp - player.exp
-     */
-
     /**
-     * Levels up player.
-     * @param exp exp
-     * @param currentLevel current level
-     * @return current level or new one
+     * Levels up the player.
+     * @param player player
+     * @return levelled up player or original
      */
-    public int levelUp(long exp, int currentLevel) {
-        // stub implementation
-        return levelCache.getClosestNextLevel(exp) != currentLevel ? ++currentLevel : currentLevel;
+    public Mono<Player> levelUp(final Mono<Player> player) {
+        return player.map(p -> {
+            if (levelCache.getClosestNextLevel(p.getExperience()) != p.getLevel()
+                    && p.getLevel() < levelCache.getMaxLevel()) {
+                p.setLevel(p.getLevel() + 1);
+            }
+            return p;
+        });
     }
 }

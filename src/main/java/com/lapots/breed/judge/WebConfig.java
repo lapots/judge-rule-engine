@@ -14,9 +14,9 @@ import static org.springframework.web.reactive.function.server.RequestPredicates
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
 /**
- * Configuration for router functions.
+ * Default initializations.
  */
-@ComponentScan({"com.lapots.breed.judge", "com.lapots.breed.judge.repository"})
+@ComponentScan("com.lapots.breed.judge")
 @Configuration
 public class WebConfig {
 

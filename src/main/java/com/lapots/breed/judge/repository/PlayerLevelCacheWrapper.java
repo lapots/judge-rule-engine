@@ -31,6 +31,14 @@ public class PlayerLevelCacheWrapper {
     }
 
     /**
+     * Returns max level.
+     * @return max level
+     */
+    public int getMaxLevel() {
+        return max(levelRepository.getAll().entrySet());
+    }
+
+    /**
      * Temporary comment until checkstyle is up.
      * @param exp experience
      * @param entries level entries
@@ -43,5 +51,16 @@ public class PlayerLevelCacheWrapper {
 
         Map.Entry<Integer, Long> foundEntry = sortedSet.lower(new AbstractMap.SimpleEntry<>(-1, exp));
         return null != foundEntry ? foundEntry.getKey() : -1;
+    }
+
+    /**
+     * Search max value.
+     * @param entries entries
+     * @return max value
+     */
+    private int max(final Set<Map.Entry<Integer, Long>> entries) {
+        NavigableSet<Map.Entry<Integer, Long>> sortedSet = new TreeSet<>(Comparator.comparing(Map.Entry::getValue));
+        sortedSet.addAll(entries);
+        return sortedSet.last().getKey();
     }
 }
