@@ -43,6 +43,7 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter')
     compile('org.springframework.boot:spring-boot-starter-webflux')
     compile('org.projectlombok:lombok')
+    compile('com.google.code.findbugs:jsr305:3.0.2') // weird
 
     testCompile('org.codehaus.groovy:groovy-all')
     testCompile('org.spockframework:spock-core:1.1-groovy-2.4')
