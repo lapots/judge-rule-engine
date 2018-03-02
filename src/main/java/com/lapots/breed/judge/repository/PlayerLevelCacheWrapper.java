@@ -4,14 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Wraps over {@link InMemoryPlayerLevelCache}.
  */
 @Component
 public class PlayerLevelCacheWrapper {
-
     private InMemoryPlayerLevelCache levelRepository;
 
     /**
@@ -40,32 +38,10 @@ public class PlayerLevelCacheWrapper {
      */
     // TODO:move everything to SQL storage
     private int search(long exp, final Set<Map.Entry<Integer, Long>> entries) {
-        // sort it
-        List<Map.Entry<Integer, Long>> entryList = new ArrayList<>(entries);
-        entryList.sort(Comparator.comparing(Map.Entry::getValue));
-        List<Long> exps = entryList.stream().map(Map.Entry::getValue).collect(Collectors.toList());
+        NavigableSet<Map.Entry<Integer, Long>> sortedSet = new TreeSet<>(Comparator.comparing(Map.Entry::getValue));
+        sortedSet.addAll(entries);
 
-        // do the search
-        if (exp < exps.get(0)) {
-            return entryList.get(0).getKey();
-        }
-        if (exp > exps.get(exps.size() - 1)) {
-            return entryList.get(exps.size() - 1).getKey();
-        }
-
-        int lo = 0;
-        int hi = exps.size() - 1;
-        while (lo <= hi) {
-            int mid = (hi + lo) / 2;
-            if (exp < exps.get(mid)) {
-                hi = mid - 1;
-            } else if (exp > exps.get(mid)) {
-                lo = mid + 1;
-            } else {
-                return entryList.get(mid).getKey();
-            }
-        }
-
-        return (exps.get(lo) - exp) < (exp - exps.get(hi)) ? entryList.get(lo).getKey() : entryList.get(hi).getKey();
+        Map.Entry<Integer, Long> foundEntry = sortedSet.lower(new AbstractMap.SimpleEntry<>(-1, exp));
+        return null != foundEntry ? foundEntry.getKey() : -1;
     }
 }

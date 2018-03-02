@@ -64,6 +64,10 @@ tasks.withType(FindBugs) {
     }
 }
 
+findbugs {
+    sourceSets = [sourceSets.main]
+}
+
 tasks.withType(Pmd) {
     reports {
         html.enabled = true

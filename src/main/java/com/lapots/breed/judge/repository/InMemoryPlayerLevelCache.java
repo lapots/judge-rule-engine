@@ -12,6 +12,8 @@ import java.util.concurrent.ConcurrentMap;
 @Component
 public class InMemoryPlayerLevelCache {
 
+    // possibly could use some sorted map implementation but it would violate the contract as it
+    // should sort by key, and I need by value
     private ConcurrentMap<Integer, Long> levelExpr = new ConcurrentHashMap<>();
 
     /**
