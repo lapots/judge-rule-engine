@@ -1,16 +1,10 @@
 package com.lapots.breed.judge.web
 
 import com.lapots.breed.judge.repository.InMemoryPlayerLevelCache
+import com.lapots.breed.judge.web.common.JudgeWebFluxAbstractSpecification
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.CommandLineRunner
-import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
-import org.springframework.context.annotation.ComponentScan
-import org.springframework.context.annotation.FilterType
-import spock.lang.Specification
 
-@WebFluxTest(excludeFilters =
-        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = CommandLineRunner.class))
-class InMemoryPlayerLevelCacheTestSpec extends Specification {
+class InMemoryPlayerLevelCacheTestSpec extends JudgeWebFluxAbstractSpecification {
 
     @Autowired
     InMemoryPlayerLevelCache cache

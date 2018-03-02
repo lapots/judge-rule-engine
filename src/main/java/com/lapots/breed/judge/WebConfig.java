@@ -1,6 +1,9 @@
 package com.lapots.breed.judge;
 
+import com.lapots.breed.judge.repository.InMemoryPlayerLevelCache;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
@@ -13,6 +16,7 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
 /**
  * Configuration for router functions.
  */
+@ComponentScan({"com.lapots.breed.judge", "com.lapots.breed.judge.repository"})
 @Configuration
 public class WebConfig {
 
@@ -26,4 +30,21 @@ public class WebConfig {
                 request -> ServerResponse.ok().body(fromPublisher(Mono.just("Hello Router WebFlux"), String.class)));
     }
 
+    /**
+     * Inits cache.
+     *
+     * TODO:investigate better solution.
+     *
+     * @param cache cache bean
+     * @return cmd runner
+     */
+    @Bean
+    public CommandLineRunner initCache(final InMemoryPlayerLevelCache cache) {
+        return args -> {
+            cache.put(1, 100);
+            cache.put(2, 1000);
+            cache.put(3, 10000);
+            cache.put(4, 100000);
+        };
+    }
 }
