@@ -22,7 +22,7 @@ public class WebConfig {
      */
     @Bean
     public RouterFunction<?> helloRoute() {
-        return route(GET("/judge/router/hello"),
+        return route(GET("/judge/rest/hello"),
                 request -> ServerResponse.ok().body(fromPublisher(Mono.just("Hello Router WebFlux"), String.class)));
     }
 

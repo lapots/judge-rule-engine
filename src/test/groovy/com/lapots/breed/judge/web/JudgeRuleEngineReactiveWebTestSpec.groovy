@@ -29,7 +29,7 @@ class JudgeRuleEngineReactiveWebTestSpec extends Specification {
 
     def "router function returns hello"() {
         expect:
-            webClient.get().uri("/judge/router/hello")
+            webClient.get().uri("/judge/rest/hello")
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(String.class)

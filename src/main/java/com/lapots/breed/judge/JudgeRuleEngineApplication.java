@@ -10,7 +10,6 @@ import org.springframework.context.annotation.ComponentScan;
 /**
  * Main application.
  */
-@SuppressWarnings("checkstyle:hideutilityclassconstructor") // FIXME:doesn't work
 @ComponentScan({"com.lapots.breed.judge"})
 @SpringBootApplication
 public class JudgeRuleEngineApplication {
