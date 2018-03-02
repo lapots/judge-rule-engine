@@ -11,7 +11,6 @@ import reactor.core.publisher.Mono;
  */
 @Component
 public class PlayerRuleCalculationService {
-
     private PlayerLevelCacheWrapper levelCache;
 
     /**

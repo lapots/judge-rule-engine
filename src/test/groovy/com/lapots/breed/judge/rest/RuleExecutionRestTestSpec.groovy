@@ -43,8 +43,8 @@ class RuleExecutionRestTestSpec extends JudgeRuleEngineReactiveWebTestSpec {
                     .isEqualTo(expected)
         where:
             lvl  | exp     | nlvl
-              1  | 120     | 2
-              2  | 999     | 2
+              1  | 120     | 1
+              1  | 1001    | 2
               3  | 12000   | 3
               4  | 150000  | 4
 
