@@ -1,4 +1,4 @@
-package com.lapots.breed.judge.web.common
+package com.lapots.breed.judge.common
 
 import com.lapots.breed.judge.WebConfig
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest

@@ -2,6 +2,7 @@ package com.lapots.breed.judge.repository;
 
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -44,5 +45,13 @@ public class InMemoryPlayerLevelCache {
      */
     public void clear() {
         levelExpr.clear();
+    }
+
+    /**
+     * Returns all records.
+     * @return records
+     */
+    Map<Integer, Long> getAll() {
+        return levelExpr;
     }
 }
