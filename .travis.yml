@@ -8,7 +8,7 @@ addons:
     token:
       secure: l0wvklSqSj4OMqk9edIKODL1bnj1F/T+j1qG0WJNp9c+xbzqPvQuW7CPtwBuWiJaS6W53R2fWugpskQS7CuKvsGvxQp9kpsxEUHVB1Wcy8qtif3DaZKACuu0Y6eKWbkBK8x8jwT54V+zgoaS7Wmlw6NB6bHpX6UVI/bFu/DG02BIGIhS4/iMLnBAiXpIk/bJSNtPT3Cl/bPD/oUZvVXlcpYFWH534GlbN4ib9+QuoUEhqc7V/SpQjRMVKgNZAL8ETsrMcNviVnVUt0Mm4+Hm+5+KrcfNv0DeKsEBdfimnytHF09M7JUjeRFlR8pDZkQxe/TiMd3VbI4WED6blRccNYaordFBq0TjUmL3Dizl2+lmAhtS4EXYUzyrgNzK1dtD5RhLG2l4/osx8xvSudZXS2z/9fiiUWvidF9cHpjN1IzWcX7VHrZ/H5e5hiiB+DifZ1A9XsAMmZ7uxjhZDyRL25cYJLqf3Te9Nd0vXPKK/aolDbbjWxeTJw+PtLxbOSgJWl5WC9dGJxCDC7I19mTZpFRYLrMLQItybaEZZkuP40WKHYnNSpW+/StODJZrH/xLw5sjXAYZsU9lB2qXH02uomdPklydcHRNwMs4Tz4jGC498MLOrj/gV19dcW9ufc6KGd1got/NxcQ/m4KXTpKEepI9+OdyY6l9iddSstgFIJk=
 script:
-- "./gradlew sonarqube"
+- "./gradlew sonarqube --stacktrace"
 cache:
   directories:
   - "$HOME/.m2/repository"
