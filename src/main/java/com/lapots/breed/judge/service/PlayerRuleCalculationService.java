@@ -21,13 +21,21 @@ public class PlayerRuleCalculationService {
         this.levelCache = wrapper;
     }
 
-    /**
-     * Gets closest level to the current experience.
-     * @param exp exp
-     * @return closest level
+    /*
+        The idea behind it is this one:
+            if player.exp >= level.exp && player.level != level.exp
+                player.level ++
+                player.exp = level.exp - player.exp
      */
-    public int calculateLevelByExperience(long exp) {
-        return levelCache.getClosestNextLevel(exp);
-    }
 
+    /**
+     * Levels up player.
+     * @param exp exp
+     * @param currentLevel current level
+     * @return current level or new one
+     */
+    public int levelUp(long exp, int currentLevel) {
+        // stub implementation
+        return levelCache.getClosestNextLevel(exp) != currentLevel ? ++currentLevel : currentLevel;
+    }
 }
