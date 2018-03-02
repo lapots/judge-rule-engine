@@ -1,6 +1,7 @@
 package com.lapots.breed.judge;
 
-import com.lapots.breed.judge.repository.InMemoryPlayerLevelCache;
+import com.lapots.breed.judge.domain.PlayerLevel;
+import com.lapots.breed.judge.repository.PlayerLevelRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -31,20 +32,18 @@ public class WebConfig {
     }
 
     /**
-     * Inits cache.
+     * Inits level repository.
      *
-     * TODO:investigate better solution.
-     *
-     * @param cache cache bean
+     * @param levelRepository cache bean
      * @return cmd runner
      */
     @Bean
-    public CommandLineRunner initCache(final InMemoryPlayerLevelCache cache) {
+    public CommandLineRunner initCache(final PlayerLevelRepository levelRepository) {
         return args -> {
-            cache.put(1, 100);
-            cache.put(2, 1000);
-            cache.put(3, 10000);
-            cache.put(4, 100000);
+            levelRepository.save(new PlayerLevel(1, 100));
+            levelRepository.save(new PlayerLevel(2, 1000));
+            levelRepository.save(new PlayerLevel(3, 10000));
+            levelRepository.save(new PlayerLevel(4, 100000));
         };
     }
 }

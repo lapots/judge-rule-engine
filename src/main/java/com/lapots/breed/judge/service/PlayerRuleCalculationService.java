@@ -1,7 +1,7 @@
 package com.lapots.breed.judge.service;
 
 import com.lapots.breed.judge.domain.Player;
-import com.lapots.breed.judge.repository.PlayerLevelCacheWrapper;
+import com.lapots.breed.judge.repository.PlayerLevelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
@@ -11,15 +11,15 @@ import reactor.core.publisher.Mono;
  */
 @Component
 public class PlayerRuleCalculationService {
-    private PlayerLevelCacheWrapper levelCache;
+    private PlayerLevelRepository levelRepository;
 
     /**
      * Constructor injection.
-     * @param wrapper cache wrapper
+     * @param levelRepository level repository
      */
     @Autowired
-    public PlayerRuleCalculationService(final PlayerLevelCacheWrapper wrapper) {
-        this.levelCache = wrapper;
+    public PlayerRuleCalculationService(final PlayerLevelRepository levelRepository) {
+        this.levelRepository = levelRepository;
     }
 
     /**
@@ -29,8 +29,8 @@ public class PlayerRuleCalculationService {
      */
     public Mono<Player> levelUp(final Mono<Player> player) {
         return player.map(p -> {
-            if (levelCache.getClosestNextLevel(p.getExperience()) != p.getLevel()
-                    && p.getLevel() < levelCache.getMaxLevel()) {
+            if (levelRepository.findClosestToExperienceLevel(p.getExperience()).getLevel() != p.getLevel()
+                    && p.getLevel() < levelRepository.findMaxLevel().getLevel()) {
                 p.setLevel(p.getLevel() + 1);
             }
             return p;

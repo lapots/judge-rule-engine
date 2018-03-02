@@ -16,6 +16,7 @@ Rule execution service
 - Gradle
 - Spring Boot 2
 - Spring Webflux
+- Spring Data JPA
 - Spock framework
 
 # cloud
