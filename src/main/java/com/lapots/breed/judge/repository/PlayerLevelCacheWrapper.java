@@ -49,7 +49,7 @@ public class PlayerLevelCacheWrapper {
         NavigableSet<Map.Entry<Integer, Long>> sortedSet = new TreeSet<>(Comparator.comparing(Map.Entry::getValue));
         sortedSet.addAll(entries);
 
-        // FIXME: incorrect work with [1, 1000] -> returns 1, should be 2
+        // FIXME:incorrect work with [1, 1000] -> returns 1, should be 2
         Map.Entry<Integer, Long> foundEntry = sortedSet.lower(new AbstractMap.SimpleEntry<>(-1, exp));
         return null != foundEntry ? foundEntry.getKey() : -1;
     }
