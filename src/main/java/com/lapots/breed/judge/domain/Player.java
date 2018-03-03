@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -18,6 +19,7 @@ import javax.persistence.Table;
 @Data
 public class Player {
     @Id
+    @GeneratedValue
     private int id;
     private int level;
     private long experience;
