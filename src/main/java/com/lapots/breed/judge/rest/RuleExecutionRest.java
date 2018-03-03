@@ -19,8 +19,16 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
 @Configuration
 public class RuleExecutionRest {
 
-    @Autowired
     private PlayerRuleCalculationService service;
+
+    /**
+     * Constructor injection.
+     * @param service calculation service
+     */
+    @Autowired
+    public RuleExecutionRest(final PlayerRuleCalculationService service) {
+        this.service = service;
+    }
 
     /**
      * Increases player level if needed.

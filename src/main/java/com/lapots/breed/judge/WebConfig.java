@@ -7,13 +7,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.web.reactive.function.server.RouterFunction;
-import org.springframework.web.reactive.function.server.ServerResponse;
-import reactor.core.publisher.Mono;
-
-import static org.springframework.web.reactive.function.BodyInserters.fromPublisher;
-import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
-import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
 /**
  * Default initializations.
@@ -22,17 +15,6 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
 @EnableJpaRepositories("com.lapots.breed.judge.repository")
 @Configuration
 public class WebConfig {
-
-    /**
-     * Router function.
-     * @return string
-     */
-    @Bean
-    public RouterFunction<?> helloRoute() {
-        return route(GET("/judge/rest/hello"),
-                request -> ServerResponse.ok().body(fromPublisher(Mono.just("Hello Router WebFlux"), String.class)));
-    }
-
     /**
      * Inits level repository.
      *
