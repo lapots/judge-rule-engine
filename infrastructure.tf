@@ -13,3 +13,8 @@ resource "heroku_app" "judge_re" {
         "heroku/gradle"
     ]
 }
+
+resource "heroku_addon" "rdb" {
+    app = "${heroku_app.judge_re.name}"
+    plan = "heroku-postgresql:hobby-dev"
+}
