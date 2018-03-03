@@ -1,7 +1,7 @@
 package com.lapots.breed.judge.service;
 
 import com.lapots.breed.judge.domain.Player;
-import com.lapots.breed.judge.repository.PlayerLevelRepository;
+import com.lapots.breed.judge.repository.api.IPlayerLevelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
@@ -11,14 +11,14 @@ import reactor.core.publisher.Mono;
  */
 @Component
 public class PlayerRuleCalculationService {
-    private PlayerLevelRepository levelRepository;
+    private IPlayerLevelRepository levelRepository;
 
     /**
      * Constructor injection.
      * @param levelRepository level repository
      */
     @Autowired
-    public PlayerRuleCalculationService(final PlayerLevelRepository levelRepository) {
+    public PlayerRuleCalculationService(final IPlayerLevelRepository levelRepository) {
         this.levelRepository = levelRepository;
     }
 
@@ -29,6 +29,7 @@ public class PlayerRuleCalculationService {
      */
     public Mono<Player> levelUp(final Mono<Player> player) {
         return player.map(p -> {
+            // TODO:investigate using rxJava for that
             if (levelRepository.findClosestToExperienceLevel(p.getExperience()).getLevel() != p.getLevel()
                     && p.getLevel() < levelRepository.findMaxLevel().getLevel()) {
                 p.setLevel(p.getLevel() + 1);

@@ -4,8 +4,12 @@ import com.lapots.breed.judge.domain.PlayerLevel;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.List;
+
 /**
  * Player level repository.
+ *
+ * It is blocking for now (until Java 10 it seems)
  */
 public interface PlayerLevelRepository extends CrudRepository<PlayerLevel, Integer> {
     /**
@@ -13,13 +17,13 @@ public interface PlayerLevelRepository extends CrudRepository<PlayerLevel, Integ
      * @param exp experience
      * @return player level entity
      */
-    @Query("SELECT TOP 1 level FROM levels ORDER BY ABS(exp - :exp)")
-    PlayerLevel findClosestToExperienceLevel(long exp);
+    @Query("FROM PlayerLevel WHERE exp <= :exp ORDER BY exp DESC")
+    List<PlayerLevel> findClosestToExperienceLevel(long exp);
 
     /**
      * Returns max level.
      * @return max level entity
      */
-    @Query("SELECT MAX(level) FROM levels")
-    PlayerLevel findMaxLevel();
+    @Query("FROM PlayerLevel ORDER BY level DESC")
+    List<PlayerLevel> findMaxLevel();
 }

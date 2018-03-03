@@ -6,6 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
@@ -18,6 +19,7 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
  * Default initializations.
  */
 @ComponentScan("com.lapots.breed.judge")
+@EnableJpaRepositories("com.lapots.breed.judge.repository")
 @Configuration
 public class WebConfig {
 

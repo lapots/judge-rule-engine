@@ -12,7 +12,7 @@ import javax.persistence.Table;
  * Level database.
  */
 @Entity
-@Table(schema = "main", name = "levels")
+@Table(name = "levels")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
