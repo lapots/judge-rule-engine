@@ -32,6 +32,7 @@ public class PlayerRuleCalculationService {
             // TODO:investigate using rxJava for that
             if (levelRepository.findClosestToExperienceLevel(p.getExperience()).getLevel() != p.getLevel()
                     && p.getLevel() < levelRepository.findMaxLevel().getLevel()) {
+                // TODO:implement it using drools
                 p.setLevel(p.getLevel() + 1);
             }
             return p;
