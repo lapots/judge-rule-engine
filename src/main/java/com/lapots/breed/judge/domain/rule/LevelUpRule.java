@@ -1,23 +1,21 @@
 package com.lapots.breed.judge.domain.rule;
 
-import com.deliveredtechnologies.rulebook.annotation.Given;
-import com.deliveredtechnologies.rulebook.annotation.Rule;
-import com.deliveredtechnologies.rulebook.annotation.Then;
-import com.deliveredtechnologies.rulebook.annotation.When;
+import com.deliveredtechnologies.rulebook.annotation.*;
 import com.lapots.breed.judge.domain.Player;
 
 /**
  * Level up rule.
  */
-@Rule
+@Rule(name = "level up rule")
 public class LevelUpRule {
-    @Given
+    @Given("player")
+    @Result
     private Player player;
 
-    @Given
+    @Given("closestLevel")
     private int closestLevel;
 
-    @Given
+    @Given("maxLevel")
     private int maxLevel;
 
     /**

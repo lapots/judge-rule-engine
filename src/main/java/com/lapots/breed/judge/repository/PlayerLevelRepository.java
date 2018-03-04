@@ -3,6 +3,7 @@ package com.lapots.breed.judge.repository;
 import com.lapots.breed.judge.domain.PlayerLevel;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public interface PlayerLevelRepository extends CrudRepository<PlayerLevel, Integ
      * @return player level entity
      */
     @Query("FROM PlayerLevel WHERE exp <= :exp ORDER BY exp DESC")
-    List<PlayerLevel> findClosestToExperienceLevel(long exp);
+    List<PlayerLevel> findClosestToExperienceLevel(@Param("exp") long exp);
 
     /**
      * Returns max level.
