@@ -12,8 +12,12 @@ import org.springframework.stereotype.Service;
 public class PlayerLevelRepositoryWrapper implements IPlayerLevelRepository {
     private PlayerLevelRepository levelRepository;
 
+    /**
+     * Constructor injection.
+     * @param levelRepository level repository
+     */
     @Autowired
-    private PlayerLevelRepositoryWrapper(final PlayerLevelRepository levelRepository) {
+    public PlayerLevelRepositoryWrapper(final PlayerLevelRepository levelRepository) {
         this.levelRepository = levelRepository;
     }
 

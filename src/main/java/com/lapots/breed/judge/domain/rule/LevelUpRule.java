@@ -20,11 +20,18 @@ public class LevelUpRule {
     @Given
     private int maxLevel;
 
+    /**
+     * When part of rule.
+     * @return when
+     */
     @When
     public boolean when() {
         return player.getLevel() != closestLevel && player.getLevel() < maxLevel;
     }
 
+    /**
+     * Then part of rule.
+     */
     @Then
     public void then() {
         player.setLevel(player.getLevel() + 1);

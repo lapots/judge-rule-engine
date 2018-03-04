@@ -167,9 +167,9 @@
         <!-- Miscellaneous other checks.                   -->
         <!-- See http://checkstyle.sf.net/config_misc.html -->
         <module name="ArrayTypeStyle"/>
-        <module name="FinalParameters">
+        <!--<module name="FinalParameters">
             <property name="ignorePrimitiveTypes" value="true"/>
-        </module>
+        </module>--> <!-- TODO: investigate -->
         <module name="TodoComment">
             <property name="format" value="(TODO: )|( FIXME: )"/>
         </module>
