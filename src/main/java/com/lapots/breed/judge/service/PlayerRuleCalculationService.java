@@ -1,25 +1,25 @@
 package com.lapots.breed.judge.service;
 
 import com.lapots.breed.judge.domain.Player;
-import com.lapots.breed.judge.repository.api.IPlayerLevelRepository;
+import com.lapots.breed.judge.service.rule.api.IRuleExecutionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 /**
  * Service for player rules calculation.
  */
-@Component
+@Service
 public class PlayerRuleCalculationService {
-    private IPlayerLevelRepository levelRepository;
+    private IRuleExecutionService ruleExecutionService;
 
     /**
      * Constructor injection.
-     * @param levelRepository level repository
+     * @param ruleExecutionService rule execution service
      */
     @Autowired
-    public PlayerRuleCalculationService(final IPlayerLevelRepository levelRepository) {
-        this.levelRepository = levelRepository;
+    public PlayerRuleCalculationService(final IRuleExecutionService ruleExecutionService) {
+        this.ruleExecutionService = ruleExecutionService;
     }
 
     /**
@@ -28,14 +28,6 @@ public class PlayerRuleCalculationService {
      * @return levelled up player or original
      */
     public Mono<Player> levelUp(final Mono<Player> player) {
-        return player.map(p -> {
-            // TODO:investigate using rxJava for that
-            if (levelRepository.findClosestToExperienceLevel(p.getExperience()).getLevel() != p.getLevel()
-                    && p.getLevel() < levelRepository.findMaxLevel().getLevel()) {
-                // TODO:implement it using drools
-                p.setLevel(p.getLevel() + 1);
-            }
-            return p;
-        });
+        return player.map(ruleExecutionService::levelUpPlayer);
     }
 }

@@ -1,5 +1,7 @@
 package com.lapots.breed.judge;
 
+import com.deliveredtechnologies.rulebook.model.RuleBook;
+import com.deliveredtechnologies.rulebook.model.runner.RuleBookRunner;
 import com.lapots.breed.judge.domain.PlayerLevel;
 import com.lapots.breed.judge.repository.PlayerLevelRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -29,5 +31,14 @@ public class WebConfig {
             levelRepository.save(new PlayerLevel(3, 10000));
             levelRepository.save(new PlayerLevel(4, 100000));
         };
+    }
+
+    /**
+     * Returns rule book bean.
+     * @return rule book
+     */
+    @Bean
+    public RuleBook ruleBook() {
+        return new RuleBookRunner("com.lapots.breed.judge.domain.rule");
     }
 }

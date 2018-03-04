@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * Level database.
+ * Level.
  */
 @Entity
 @Table(name = "levels")
