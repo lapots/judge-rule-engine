@@ -1,7 +1,7 @@
 package com.lapots.breed.judge.rest;
 
 import com.lapots.breed.judge.domain.Player;
-import com.lapots.breed.judge.service.PlayerRuleCalculationService;
+import com.lapots.breed.judge.service.api.IPlayerRuleCalculationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,14 +17,14 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
  */
 @Configuration
 public class RuleExecutionRest {
-    private PlayerRuleCalculationService service;
+    private IPlayerRuleCalculationService service;
 
     /**
      * Constructor injection.
      * @param service calculation service
      */
     @Autowired
-    public RuleExecutionRest(final PlayerRuleCalculationService service) {
+    public RuleExecutionRest(final IPlayerRuleCalculationService service) {
         this.service = service;
     }
 
