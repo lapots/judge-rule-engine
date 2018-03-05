@@ -18,6 +18,7 @@ Rule execution service
 - Spring Webflux
 - Spring Data JPA
 - Spock framework
+- RuleBook Rule Engine
 
 # cloud
 - Travis CI
