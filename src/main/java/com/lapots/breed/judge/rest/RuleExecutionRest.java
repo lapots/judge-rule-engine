@@ -18,7 +18,6 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
  */
 @Configuration
 public class RuleExecutionRest {
-
     private PlayerRuleCalculationService service;
 
     /**

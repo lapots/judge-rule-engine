@@ -35,6 +35,7 @@ public class RuleExecutionService implements IRuleExecutionService {
 
     @Override
     public Player levelUpPlayer(Player player) {
+        LOGGER.debug("Attempt to level up player: [{}].", player);
         int closestLevel = levelRepo.findClosestLevel(player.getExperience());
         int maxLevel = levelRepo.findMaxLevel();
 
@@ -42,7 +43,10 @@ public class RuleExecutionService implements IRuleExecutionService {
         facts.put(new Fact<>("player", player));
         facts.put(new Fact<>("closestLevel", closestLevel));
         facts.put(new Fact<>("maxLevel", maxLevel));
+
+        LOGGER.debug("Running rule engine.");
         ruleBook.run(facts);
+        LOGGER.debug("Finished running rule engine.");
         return player;
     }
 }
