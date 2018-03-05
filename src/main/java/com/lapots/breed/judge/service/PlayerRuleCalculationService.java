@@ -4,11 +4,11 @@ import com.lapots.breed.judge.domain.Player;
 import com.lapots.breed.judge.service.rule.api.IRuleExecutionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Mono;
 
 /**
  * Service for player rules calculation.
  */
+// TODO:create interface
 @Service
 public class PlayerRuleCalculationService {
     private IRuleExecutionService ruleExecutionService;
@@ -27,7 +27,7 @@ public class PlayerRuleCalculationService {
      * @param player player
      * @return levelled up player or original
      */
-    public Mono<Player> levelUp(final Mono<Player> player) {
-        return player.map(ruleExecutionService::levelUpPlayer);
+    public Player levelUp(Player player) {
+        return ruleExecutionService.levelUpPlayer(player);
     }
 }

@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
-import reactor.core.publisher.Mono;
 
 import static org.springframework.web.reactive.function.BodyInserters.fromPublisher;
 import static org.springframework.web.reactive.function.server.RequestPredicates.POST;
@@ -36,10 +35,10 @@ public class RuleExecutionRest {
     @Bean
     public RouterFunction<?> validatePlayer() {
         return route(POST("/judge/rest/player"),
-            request -> {
-                Mono<Player> player = request.bodyToMono(Player.class);
-                return ServerResponse.ok().body(fromPublisher(service.levelUp(player), Player.class));
-            });
+            request -> ServerResponse.ok().body(
+                    fromPublisher(request.bodyToMono(Player.class).map(p -> service.levelUp(p)), Player.class)
+            )
+        );
     }
 
 }
