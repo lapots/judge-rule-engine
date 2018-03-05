@@ -2,8 +2,10 @@ package com.lapots.breed.judge;
 
 import com.deliveredtechnologies.rulebook.model.RuleBook;
 import com.deliveredtechnologies.rulebook.model.runner.RuleBookRunner;
+import com.lapots.breed.judge.domain.Player;
 import com.lapots.breed.judge.domain.PlayerLevel;
 import com.lapots.breed.judge.repository.PlayerLevelRepository;
+import com.lapots.breed.judge.repository.PlayerRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -20,16 +22,21 @@ public class WebConfig {
     /**
      * Inits level repository.
      *
-     * @param levelRepository cache bean
+     * @param levelRepository level repository
+     * @param playerRepository player repository
      * @return cmd runner
      */
     @Bean
-    public CommandLineRunner initCache(final PlayerLevelRepository levelRepository) {
+    public CommandLineRunner initCache(final PlayerLevelRepository levelRepository,
+                                       final PlayerRepository playerRepository) {
         return args -> {
             levelRepository.save(new PlayerLevel(1, 100));
             levelRepository.save(new PlayerLevel(2, 1000));
             levelRepository.save(new PlayerLevel(3, 10000));
             levelRepository.save(new PlayerLevel(4, 100000));
+
+            playerRepository.save(new Player(0, 3, 15000L));
+            playerRepository.save(new Player(0, 4, 100000));
         };
     }
 
