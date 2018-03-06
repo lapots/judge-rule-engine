@@ -37,7 +37,7 @@ public class PlayerLevelServiceFacade implements IPlayerLevelService {
     public Player levelUp(Player player) {
         Optional<Player> foundPlayer = playerRepository.findById(player.getId());
         LOGGER.debug("Found player: [{}]", foundPlayer);
-        if (0 == player.getId() || !playerRepository.findById(player.getId()).isPresent()) {
+        if (0 == player.getId() || !foundPlayer.isPresent()) {
             String msg = String.format("Player with id [%s] doesn't exist.", player.getId());
             LOGGER.error(msg);
             throw new IncorrectRequestContentException(msg);
