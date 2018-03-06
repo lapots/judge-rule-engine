@@ -18,3 +18,8 @@ resource "heroku_addon" "rdb" {
     app = "${heroku_app.judge_re.name}"
     plan = "heroku-postgresql:hobby-dev"
 }
+
+resource "heroku_addon" "logging" {
+    app = "${heroku_app.judge_re.name}"
+    plan = "coralogix:free"
+}
