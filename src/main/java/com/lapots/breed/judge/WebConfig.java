@@ -35,8 +35,9 @@ public class WebConfig {
             levelRepository.save(new PlayerLevel(3, 10000));
             levelRepository.save(new PlayerLevel(4, 100000));
 
-            playerRepository.save(new Player(0, 3, 15000L));
-            playerRepository.save(new Player(0, 4, 100000));
+            // just for consistency
+            playerRepository.save(new Player(1, 3, 15000L));
+            playerRepository.save(new Player(2, 4, 100000));
         };
     }
 

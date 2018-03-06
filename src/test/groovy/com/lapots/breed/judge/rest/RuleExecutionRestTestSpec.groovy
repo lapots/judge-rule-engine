@@ -30,8 +30,8 @@ class RuleExecutionRestTestSpec extends Specification {
 
     def "should increase player level"() {
         setup:
-            def input = buildPlayer(1, 1000)
-            def output = buildPlayer(2, 1000)
+            def input = buildPlayer(1, 1, 1000)
+            def output = buildPlayer(1, 2, 1000)
         expect:
             client.post().uri("/judge/rest/player")
                     .header("Content-Type", "application/json")
@@ -44,8 +44,8 @@ class RuleExecutionRestTestSpec extends Specification {
 
     def "should not increase player level"() {
         setup:
-        def input = buildPlayer(1, 999)
-        def output = buildPlayer(1, 999)
+        def input = buildPlayer(1, 1, 999)
+        def output = buildPlayer(1, 1, 999)
         expect:
         client.post().uri("/judge/rest/player")
                 .header("Content-Type", "application/json")
@@ -56,9 +56,10 @@ class RuleExecutionRestTestSpec extends Specification {
                 .isEqualTo(output)
     }
 
-    def buildPlayer(int lvl, long exp) {
+    def buildPlayer(int idx, int lvl, long exp) {
         def player = new Player()
         player.with {
+            id = idx
             level = lvl
             experience = exp
         }
