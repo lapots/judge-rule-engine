@@ -20,6 +20,5 @@ rule.outputs.each {
 println "Bindings"
 rule.execution.bindings.eachWithIndex{ entry, i ->
     println "Index: $i"
-    // TODO: investigate why it is a list
     println entry
 }

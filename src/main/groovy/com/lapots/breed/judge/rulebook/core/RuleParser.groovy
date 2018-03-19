@@ -52,6 +52,8 @@ class RuleParser {
                 binding.conditions = it.condition.collect { condition_element ->
                     exec.when.conditions.find { it.id == condition_element }
                 }
+
+                binding
             }
             out.execution = exec
 
