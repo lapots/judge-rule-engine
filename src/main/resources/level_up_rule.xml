@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rules>
+    <rule name="level up rule"> <!-- @Rule(name="level up rule") -->
+        <inputs>
+            <input fact="player" name="player" type="com.lapots.breed.judge.domain.Player" access="private"/> <!-- @Given("player") private Player player -->
+            <input fact="closestLevel" name="closestLevel" type="int" access="private"/> <!-- @Given("player") private int closestLevel -->
+            <input fact="maxLevel" name="maxLevel" type="int" access="private"/> <!-- @Given("player") private int maxLevel -->
+        </inputs>
+        <execution>
+            <when>
+                <conditions>
+                    <condition id="cond_1" type="not_equals">
+                        <left>
+                            <code>player.getLevel()</code>
+                        </left>
+                        <right>
+                            <code>closestLevel</code>
+                        </right>
+                    </condition>
+                    <condition id="cond_2" type="less_than">
+                        <left>
+                            <code>player.getLevel()</code>
+                        </left>
+                        <right>
+                            <code>maxLevel</code>
+                        </right>
+                    </condition>
+                </conditions>
+            </when>
+            <then>
+                <!-- code means direct Java code -->
+                <code>player.setLevel(player.getLevel() + 1);</code>
+            </then>
+            <bindings>
+                <binding type="and">
+                    <condition>cond_1</condition>
+                    <condition>cond_2</condition>
+                </binding>
+            </bindings>
+        </execution>
+        <outputs>
+            <output name="player" type="com.lapots.breed.judge.domain.Player" access="private"/>
+        </outputs>
+    </rule>
+</rules>
