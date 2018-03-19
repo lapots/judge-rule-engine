@@ -112,3 +112,8 @@ stage.mustRunAfter(clean)
 clean << {
     project.file('judge-rule-engine.jar').delete()
 }
+
+task run_groovy(type:JavaExec, dependsOn: 'classes') {
+    main = 'com.lapots.breed.judge.script'
+    classpath = sourceSets.main.runtimeClasspath
+}

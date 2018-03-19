@@ -1,7 +1,10 @@
 package com.lapots.breed.judge.rulebook.domain.execution.binding
 
+import groovy.transform.ToString
+
+@ToString
 class Binding {
-    BindingType type
+    def type
     // list of condition ids
     def conditions = []
 }
