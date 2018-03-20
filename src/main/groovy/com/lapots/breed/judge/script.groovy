@@ -1,5 +1,9 @@
 package com.lapots.breed.judge
 
+import com.deliveredtechnologies.rulebook.lang.RuleBookBuilder
+import com.deliveredtechnologies.rulebook.model.RuleBook
+import com.deliveredtechnologies.rulebook.model.runner.RuleAdapter
+import com.lapots.breed.judge.rulebook.core.ClassGenerator
 import com.lapots.breed.judge.rulebook.core.RuleParser
 
 // test
@@ -7,18 +11,10 @@ def ruleParser = new RuleParser()
 def rules = ruleParser.parseRules("level_up_rule.xml")
 def rule = rules[0]
 
-println "Rule name: $rule.name"
-println "Rule facts:"
-rule.inputs.each {
-    println it
-}
-println "Rule outputs:"
-rule.outputs.each {
-    println it
-}
+def generator = new ClassGenerator()
 
-println "Bindings"
-rule.execution.bindings.eachWithIndex{ entry, i ->
-    println "Index: $i"
-    println entry
-}
+RuleAdapter adapter = generator.generateClassForRule(rule, this.getClass().getClassLoader())
+RuleBook ruleBook = RuleBookBuilder.create().addRule(adapter).build()
+println ruleBook.hasRules()
+
+

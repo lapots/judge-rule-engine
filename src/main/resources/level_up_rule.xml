@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <rules>
-    <rule name="level up rule"> <!-- @Rule(name="level up rule") -->
+    <rule name="level up rule runtime"> <!-- @Rule(name="level up rule runtime") -->
         <inputs>
             <input fact="player" name="player" type="com.lapots.breed.judge.domain.Player" access="private"/> <!-- @Given("player") private Player player -->
             <input fact="closestLevel" name="closestLevel" type="int" access="private"/> <!-- @Given("player") private int closestLevel -->

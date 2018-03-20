@@ -22,10 +22,10 @@ class RuleParser {
             // parse [inputs] section
             out.inputs = rule.inputs.input.collect {
                 new Input(
-                        fact: it.@fact,
-                        name: it.@name,
-                        type: it.@type,
-                        access: it.@access
+                        fact: it.@fact.text(),
+                        name: it.@name.text(),
+                        type: it.@type.text(),
+                        access: it.@access.text()
                 )
             }
 
@@ -37,8 +37,8 @@ class RuleParser {
             exec.when = new WhenBlock()
             exec.when.conditions = rule.execution.when.conditions.condition.collect { condition_element ->
                 def condition = new Condition(
-                        id: condition_element.@id,
-                        type: condition_element.@type
+                        id: condition_element.@id.text(),
+                        type: condition_element.@type.text()
                 )
                 condition.with {
                     left = new ConditionBlock(code: condition_element.left.code)
@@ -48,7 +48,7 @@ class RuleParser {
             }
 
             exec.bindings = rule.execution.bindings.binding.collect {
-                def binding = new Binding(type: it.@type)
+                def binding = new Binding(type: it.@type.text())
                 binding.conditions = it.condition.collect { condition_element ->
                     exec.when.conditions.find { it.id == condition_element }
                 }
@@ -60,9 +60,9 @@ class RuleParser {
             // parse [outputs] section
             out.outputs = rule.outputs.output.collect {
                 new Output(
-                        name: it.@name,
-                        type: it.@type,
-                        access: it.@access
+                        name: it.@name.text(),
+                        type: it.@type.text(),
+                        access: it.@access.text()
                 )
             }
 
