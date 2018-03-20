@@ -1,10 +1,12 @@
 package com.lapots.breed.judge.rulebook.core
 
 import com.deliveredtechnologies.rulebook.annotation.Given
+import com.deliveredtechnologies.rulebook.annotation.Result
 import com.deliveredtechnologies.rulebook.model.runner.RuleAdapter
 import com.google.common.base.CaseFormat
 import com.lapots.breed.judge.rulebook.domain.Rule
 import com.lapots.breed.judge.rulebook.domain.data.Input
+import com.lapots.breed.judge.rulebook.domain.data.Output
 import net.bytebuddy.ByteBuddy
 import net.bytebuddy.description.annotation.AnnotationDescription
 import net.bytebuddy.description.type.TypeDefinition
@@ -56,21 +58,57 @@ class ClassGenerator {
                 .annotateType(annotationDesc)
     }
 
+    // TODO: refactoring
     def genClassFields(Rule rule, DynamicType.Builder<?> dynamicType) {
-        // generates outputs and inputs
-        rule.inputs.each { Input input ->
-            def annotationDesc = AnnotationDescription.Builder
-                    .ofType(Given.class)
-                    .define("value", input.fact)
-                    .build()
+        // need some preprocessing for grouping
+        def groupedInputs = rule.inputs.groupBy { it.name }
+        def groupedOutputs = rule.outputs.groupBy { it.name }
 
-            def type = types[input.type] ? types[input.type] : input.type
-
-            dynamicType= dynamicType
-                    .defineField(input.name, TypeDefinition.forName(type), accesses[input.access])
-                    .annotateField(annotationDesc)
+        def newMap = groupedInputs.collectEntries { entry ->
+            if (groupedOutputs[entry.key]) { // output contain the same key
+                def newValue = [ *entry.value, *groupedOutputs[entry.key] ]
+                [ entry.key, newValue ]
+            } else {
+                [ entry.key, *entry.value ]
+            }
         }
 
+        groupedOutputs.each { k, v ->
+            if (!newMap[k]) {
+                newMap[k] = v
+            }
+        }
+
+        newMap.each { fieldName, types ->
+            def inputAnnotationDesc, outputAnnotationDesc, fieldType, access
+            types.each { type ->
+                if (type instanceof Input) {
+                    fieldType = type.type
+                    access = type.access
+                    inputAnnotationDesc = AnnotationDescription.Builder
+                            .ofType(Given.class)
+                            .define("value", type.fact)
+                            .build()
+                } else if (type instanceof Output) {
+                    fieldType = type.type
+                    access = type.access
+                    outputAnnotationDesc = AnnotationDescription.Builder
+                            .ofType(Result.class)
+                            .build()
+                }
+            }
+
+            def type = this.types[fieldType] ? this.types[fieldType] : fieldType
+            dynamicType = dynamicType.defineField(fieldName, TypeDefinition.forName(type), accesses[access])
+
+            if (inputAnnotationDesc && !outputAnnotationDesc) {
+                dynamicType = dynamicType.annotateField(inputAnnotationDesc)
+            } else if (!inputAnnotationDesc && outputAnnotationDesc) {
+                dynamicType = dynamicType.annotateField(outputAnnotationDesc)
+            } else {
+                dynamicType = dynamicType.annotateField(inputAnnotationDesc, outputAnnotationDesc)
+            }
+        }
         dynamicType
     }
 
