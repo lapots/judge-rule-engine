@@ -2,6 +2,7 @@ package com.lapots.breed.judge.rulebook.core
 
 import com.deliveredtechnologies.rulebook.annotation.Given
 import com.deliveredtechnologies.rulebook.annotation.Result
+import com.deliveredtechnologies.rulebook.annotation.When
 import com.deliveredtechnologies.rulebook.model.runner.RuleAdapter
 import com.google.common.base.CaseFormat
 import com.lapots.breed.judge.rulebook.domain.Rule
@@ -12,7 +13,12 @@ import net.bytebuddy.description.annotation.AnnotationDescription
 import net.bytebuddy.description.type.TypeDefinition
 import net.bytebuddy.dynamic.DynamicType
 import net.bytebuddy.dynamic.loading.ClassLoadingStrategy
+import net.bytebuddy.implementation.FixedValue
 import net.bytebuddy.jar.asm.Opcodes
+
+import static net.bytebuddy.matcher.ElementMatchers.named
+import static net.bytebuddy.matcher.ElementMatchers.returns
+import static net.bytebuddy.matcher.ElementMatchers.takesArguments
 
 class ClassGenerator {
 
@@ -32,6 +38,7 @@ class ClassGenerator {
         // generate class skeleton
         DynamicType.Builder<?> dynamicType = genClassSkeleton((String) rule.name)
         dynamicType = genClassFields(rule, dynamicType)
+        dynamicType = genMethods(rule, dynamicType)
 
         // generate Rule adapter
         def generatedCode = dynamicType.make()
@@ -109,6 +116,26 @@ class ClassGenerator {
                 dynamicType = dynamicType.annotateField(inputAnnotationDesc, outputAnnotationDesc)
             }
         }
+        dynamicType
+    }
+
+    def genMethods(Rule rule, DynamicType.Builder<?> dynamicType) {
+        def execution = rule.execution
+
+        def whenDesc = AnnotationDescription.Builder
+                .ofType(When.class)
+                .build()
+        // when
+        dynamicType = dynamicType
+                .method(named("when").and(returns(Boolean.class)).and(takesArguments(0)))
+                .intercept(FixedValue.value(true))
+                .annotateMethod(whenDesc)
+        /*
+        dynamicType = dynamicType.method(named("then"))
+        execution.bindings // &&, || and so on
+        execution.when
+        execution.then
+        */
         dynamicType
     }
 
