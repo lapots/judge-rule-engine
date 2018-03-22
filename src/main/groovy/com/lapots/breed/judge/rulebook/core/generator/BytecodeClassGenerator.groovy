@@ -139,6 +139,7 @@ class BytecodeClassGenerator implements IClassGenerator {
                     .intercept(FixedValue.value(true))
                     .annotateMethod(whenDesc)
 
+            // TODO: investigate method creation
             /*
             dynamicType = dynamicType.method(named("then"))
             execution.bindings // &&, || and so on
