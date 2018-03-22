@@ -31,6 +31,7 @@
                 <!-- code means direct Java code -->
                 <code>player.setLevel(player.getLevel() + 1);</code>
             </then>
+            <!-- move to [when] block -->
             <bindings>
                 <binding type="and">
                     <condition>cond_1</condition>

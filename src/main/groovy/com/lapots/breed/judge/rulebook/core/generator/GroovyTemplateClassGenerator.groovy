@@ -10,10 +10,20 @@ class GroovyTemplateClassGenerator implements IClassGenerator {
 
     private static final PACKAGE = "com.lapots.breed.judge.domain.rule"
 
+    def bindingsMap = [
+            "and" : "&&"
+    ]
+
+    def conditionsMap = [
+            "not_equals" : "!=",
+            "less_than" : "<"
+    ]
+
     @Override
     Class<?> generateRule(Rule rule) {
         def templateFile = this.getClass().getResource("/rule_template.template")
         def code = genClass(templateFile, rule)
+        println code
         compileClass(code)
     }
 
@@ -86,12 +96,48 @@ class GroovyTemplateClassGenerator implements IClassGenerator {
     }
 
     def private populateLhs(map, Rule rule) {
-        map["lhs"] = "true;"
+        def bindings = rule.execution.bindings
+        def when = rule.execution.when
+
+        // TODO: investigate detailed flow
+        def conditions = when.conditions.groupBy { it.id }
+        def processedConditions = conditions.collectEntries { k, v ->
+            def code = ""
+
+            def leftBlock = v.left[0]
+            if (leftBlock.code) { code += leftBlock.code }
+
+            println v.type[0] // TODO: investigate list
+            def operator = conditionsMap[v.type[0]]
+            code += " " + operator + " "
+
+            def rightBlock = v.right[0]
+            if (rightBlock.code) { code += rightBlock.code }
+
+            println code
+
+            [k, code]
+        }
+
+        // single record I presume
+        def result = bindings.collect { b ->
+            def type = " " + bindingsMap[b.type] + " "
+            b.conditions.collect { cond_id ->
+                // TODO: investigate
+                processedConditions[cond_id.text()]
+            }.join(type)
+        }
+
+        map["lhs"] = result[0] + ";"
         map
     }
 
     def private populateRhs(map, Rule rule) {
-        map["rhs"] = ""
+        def then = rule.execution.then
+
+        if (then.code) { map["rhs"] = then.code }
+        else { map["rhs"] = "" }
+
         map
     }
 }
