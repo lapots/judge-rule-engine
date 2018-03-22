@@ -1,0 +1,20 @@
+package $pkg;
+
+import com.deliveredtechnologies.rulebook.annotation.*;
+
+<% objectImports.each { println "import $it;" } %>
+@Rule(name = "$ruleName")
+public class ${className} {
+
+<% fields.each { println "$it\n" } %>
+
+    @When
+    public boolean when() {
+        return $lhs
+    }
+
+    @Then
+    public void then() {
+        $rhs
+    }
+}

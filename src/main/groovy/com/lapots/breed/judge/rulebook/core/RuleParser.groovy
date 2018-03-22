@@ -18,7 +18,7 @@ class RuleParser {
         def rules = new XmlSlurper().parseText(readResource("/level_up_rule.xml"))
 
         rules.rule.collect { rule ->
-            Rule out = new Rule(name: rule.@name)
+            Rule out = new Rule(name: rule.@name.text())
             // parse [inputs] section
             out.inputs = rule.inputs.input.collect {
                 new Input(

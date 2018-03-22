@@ -7,14 +7,18 @@ import com.deliveredtechnologies.rulebook.model.runner.RuleAdapter
 import com.lapots.breed.judge.rulebook.core.RuleParser
 import com.lapots.breed.judge.rulebook.core.XmlRuleLoader
 import com.lapots.breed.judge.rulebook.core.generator.BytecodeClassGenerator
+import com.lapots.breed.judge.rulebook.core.generator.GroovyTemplateClassGenerator
 
 // test
 def ruleParser = new RuleParser()
 def rules = ruleParser.parseRules("level_up_rule.xml")
 def rule = rules[0]
 
-RuleAdapter loadedRule = XmlRuleLoader.loadRule(new BytecodeClassGenerator(), rule)
-RuleBook ruleBook = RuleBookBuilder.create().addRule(loadedRule).build()
-println ruleBook.hasRules()
+new GroovyTemplateClassGenerator().generateRule(rule)
+// byteCodeGeneratorSample(rule)
 
-
+def byteCodeGeneratorSample(rule) {
+    RuleAdapter loadedRule = XmlRuleLoader.loadRule(new BytecodeClassGenerator(), rule)
+    RuleBook ruleBook = RuleBookBuilder.create().addRule(loadedRule).build()
+    println ruleBook.hasRules()
+}
