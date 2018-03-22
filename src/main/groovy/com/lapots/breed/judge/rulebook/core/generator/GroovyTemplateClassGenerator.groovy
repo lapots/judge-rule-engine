@@ -2,10 +2,8 @@ package com.lapots.breed.judge.rulebook.core.generator
 
 import com.google.common.base.CaseFormat
 import com.lapots.breed.judge.rulebook.core.generator.api.IClassGenerator
-import com.lapots.breed.judge.rulebook.core.util.XmlProcessingUtils
 import com.lapots.breed.judge.rulebook.domain.Rule
 import com.lapots.breed.judge.rulebook.domain.data.Input
-import com.lapots.breed.judge.rulebook.domain.data.Output
 import groovy.text.SimpleTemplateEngine
 
 class GroovyTemplateClassGenerator implements IClassGenerator {
@@ -16,8 +14,7 @@ class GroovyTemplateClassGenerator implements IClassGenerator {
     Class<?> generateRule(Rule rule) {
         def templateFile = this.getClass().getResource("/rule_template.template")
         def code = genClass(templateFile, rule)
-        println code
-        // compileClass(code)
+        compileClass(code)
     }
 
     def private genClass(URL templateFile, Rule data) {
@@ -27,8 +24,7 @@ class GroovyTemplateClassGenerator implements IClassGenerator {
     }
 
     def private compileClass(String code) {
-        def classLoader = (GroovyClassLoader) this.getClass().getClassLoader()
-        classLoader.parseClass(code)
+        new GroovyClassLoader().parseClass(code)
     }
 
     def private createMap(Rule rule) {
@@ -36,6 +32,8 @@ class GroovyTemplateClassGenerator implements IClassGenerator {
         map = populateCommon(map, rule)
         map = populateImports(map, rule)
         map = populateFields(map, rule)
+        map = populateLhs(map, rule)
+        map = populateRhs(map, rule)
         map
     }
 
@@ -84,6 +82,16 @@ class GroovyTemplateClassGenerator implements IClassGenerator {
         }
         map["fields"] = fields
 
+        map
+    }
+
+    def private populateLhs(map, Rule rule) {
+        map["lhs"] = "true;"
+        map
+    }
+
+    def private populateRhs(map, Rule rule) {
+        map["rhs"] = ""
         map
     }
 }
