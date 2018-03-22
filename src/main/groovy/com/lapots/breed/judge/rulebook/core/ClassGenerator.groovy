@@ -130,6 +130,8 @@ class ClassGenerator {
                 .method(named("when").and(returns(Boolean.class)).and(takesArguments(0)))
                 .intercept(FixedValue.value(true))
                 .annotateMethod(whenDesc)
+
+        println execution.bindings
         /*
         dynamicType = dynamicType.method(named("then"))
         execution.bindings // &&, || and so on

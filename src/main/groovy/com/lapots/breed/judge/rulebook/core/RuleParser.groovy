@@ -49,10 +49,7 @@ class RuleParser {
 
             exec.bindings = rule.execution.bindings.binding.collect {
                 def binding = new Binding(type: it.@type.text())
-                binding.conditions = it.condition.collect { condition_element ->
-                    exec.when.conditions.find { it.id == condition_element }
-                }
-
+                binding.conditions = it.condition.collect()
                 binding
             }
             out.execution = exec
