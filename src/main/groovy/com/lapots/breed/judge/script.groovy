@@ -13,8 +13,8 @@ def rule = rules[0]
 
 def generator = new ClassGenerator()
 
-RuleAdapter adapter = generator.generateClassForRule(rule, this.getClass().getClassLoader())
-RuleBook ruleBook = RuleBookBuilder.create().addRule(adapter).build()
+Class<?> clazz = generator.generateClassForRule(rule, this.getClass().getClassLoader())
+RuleBook ruleBook = RuleBookBuilder.create().addRule(new RuleAdapter(clazz.newInstance())).build()
 println ruleBook.hasRules()
 
 

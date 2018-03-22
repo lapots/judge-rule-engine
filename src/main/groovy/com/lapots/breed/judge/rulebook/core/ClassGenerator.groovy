@@ -131,7 +131,6 @@ class ClassGenerator {
                 .intercept(FixedValue.value(true))
                 .annotateMethod(whenDesc)
 
-        println execution.bindings
         /*
         dynamicType = dynamicType.method(named("then"))
         execution.bindings // &&, || and so on
@@ -144,8 +143,6 @@ class ClassGenerator {
     def genRule(DynamicType.Unloaded<?> dynamicType, ClassLoader classLoader) {
         // create new class loader based on the provided as a parent to store external rules
         // in a separate classloader in a sense
-        Class<?> clazz =
-                dynamicType.load(classLoader, ClassLoadingStrategy.Default.WRAPPER).getLoaded() // returns Class<?>
-        new RuleAdapter(clazz.newInstance()) // add it as rule to rule book
+        dynamicType.load(classLoader, ClassLoadingStrategy.Default.WRAPPER).getLoaded() // returns Class<?>
     }
 }
