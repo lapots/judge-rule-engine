@@ -14,6 +14,10 @@ class GroovyTemplateClassGenerator implements IClassGenerator {
             "and" : "&&"
     ]
 
+    def typesMap = [
+            "player" : "com.lapots.breed.judge.domain.Player"
+    ]
+
     def conditionsMap = [
             "not_equals" : "!=",
             "less_than" : "<"
@@ -23,7 +27,6 @@ class GroovyTemplateClassGenerator implements IClassGenerator {
     Class<?> generateRule(Rule rule) {
         def templateFile = this.getClass().getResource("/rule_template.template")
         def code = genClass(templateFile, rule)
-        println code
         compileClass(code)
     }
 
@@ -63,6 +66,7 @@ class GroovyTemplateClassGenerator implements IClassGenerator {
         def imports = rule.inputs.collect { it.type }
         imports += rule.outputs.collect { it.type }
         imports = imports.findAll { !(it ==~ /java.lang.*/) && !(it ==~ /int/) } // find better way
+        imports = imports.collect { typesMap[it] }
         imports = imports.unique()
         map["objectImports"] = imports
 
@@ -87,8 +91,9 @@ class GroovyTemplateClassGenerator implements IClassGenerator {
             }
             // all needed fields are the same for both objects
             def anyType = entry.value[0]
+            def importType = typesMap[anyType.type] ? typesMap[anyType.type] : anyType.type
             def output = annotations.join(' ')
-            output += " $anyType.access ${ anyType.type.substring(anyType.type.lastIndexOf('.') + 1) } $anyType.name;"
+            output += " $anyType.access ${ importType.substring(importType.lastIndexOf('.') + 1) } $anyType.name;"
         }
         map["fields"] = fields
 
@@ -100,7 +105,6 @@ class GroovyTemplateClassGenerator implements IClassGenerator {
         def when = rule.execution.when
 
         def conditions = when.conditions.groupBy { it.id }
-        println conditions
         def processedConditions = conditions.collectEntries { k, v ->
             def code = ""
 
@@ -108,7 +112,6 @@ class GroovyTemplateClassGenerator implements IClassGenerator {
             def leftBlock = v[0].left
             if (leftBlock.code) { code += leftBlock.code }
 
-            println v[0].type
             def operator = conditionsMap[v[0].type]
             code += " " + operator + " "
 

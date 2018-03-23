@@ -2,7 +2,7 @@
 <rules>
     <rule name="level up rule runtime">
         <inputs>
-            <input fact="player" name="player" type="com.lapots.breed.judge.domain.Player" access="private"/>
+            <input fact="player" name="player" type="player" access="private"/>
             <input fact="closestLevel" name="closestLevel" type="int" access="private"/>
             <input fact="maxLevel" name="maxLevel" type="int" access="private"/>
         </inputs>
@@ -38,7 +38,7 @@
             </bindings>
         </execution>
         <outputs>
-            <output name="player" type="com.lapots.breed.judge.domain.Player" access="private"/>
+            <output name="player" type="player" access="private"/>
         </outputs>
     </rule>
 </rules>
