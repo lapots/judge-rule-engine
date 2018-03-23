@@ -9,4 +9,13 @@ class XmlRuleLoader {
     static def loadRule(IClassGenerator generator, Rule rule) {
         new RuleAdapter(generator.generateRule(rule).newInstance())
     }
+
+    static def loadRuleFromString(IClassGenerator generator, String xml) {
+        def ruleParser = new RuleParser()
+        // TODO: adjust flow
+        def rules = ruleParser.parseRules(xml, false)
+
+        def rule = rules[0]
+        loadRule(generator, rule)
+    }
 }

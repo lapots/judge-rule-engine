@@ -11,16 +11,13 @@ import com.lapots.breed.judge.rulebook.core.generator.GroovyTemplateClassGenerat
 
 // test
 def ruleParser = new RuleParser()
-def rules = ruleParser.parseRules("level_up_rule.xml")
+def rules = ruleParser.parseRules("/level_up_rule.xml", true)
 def rule = rules[0]
-
 templateCodeGeneratorSample(rule)
-byteCodeGeneratorSample(rule)
-
 def templateCodeGeneratorSample(rule) {
     RuleAdapter loadedRule = XmlRuleLoader.loadRule(new GroovyTemplateClassGenerator(), rule)
     RuleBook ruleBook = RuleBookBuilder.create().addRule(loadedRule).build()
-    println ruleBook.hasRules()
+    // println ruleBook.hasRules()
 }
 
 def byteCodeGeneratorSample(rule) {

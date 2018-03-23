@@ -14,9 +14,17 @@ import static com.lapots.breed.judge.rulebook.core.util.XmlProcessingUtils.readR
 
 class RuleParser {
 
-    def parseRules(String rulesFile) {
-        def rules = new XmlSlurper().parseText(readResource("/level_up_rule.xml"))
+    def parseRules(String xml, boolean isFile) {
+        if (isFile) {
+            def rules = new XmlSlurper().parseText(readResource(xml))
+            return parseRulesXml(rules)
+        } else {
+            def rules = new XmlSlurper().parseText(xml)
+            return parseRulesXml(rules)
+        }
+    }
 
+    def private parseRulesXml(rules) {
         rules.rule.collect { rule ->
             Rule out = new Rule(name: rule.@name.text())
             // parse [inputs] section
@@ -41,15 +49,15 @@ class RuleParser {
                         type: condition_element.@type.text()
                 )
                 condition.with {
-                    left = new ConditionBlock(code: condition_element.left.code)
-                    right = new ConditionBlock(code: condition_element.right.code)
+                    left = new ConditionBlock(code: condition_element.left.code.text())
+                    right = new ConditionBlock(code: condition_element.right.code.text())
                 }
                 condition
             }
 
             exec.bindings = rule.execution.bindings.binding.collect {
                 def binding = new Binding(type: it.@type.text())
-                binding.conditions = it.condition.collect()
+                binding.conditions = it.condition.collect { it.text() }
                 binding
             }
             out.execution = exec
@@ -66,5 +74,4 @@ class RuleParser {
             out
         }
     }
-
 }

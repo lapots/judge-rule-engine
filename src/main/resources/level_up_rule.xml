@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <rules>
-    <rule name="level up rule runtime"> <!-- @Rule(name="level up rule runtime") -->
+    <rule name="level up rule runtime">
         <inputs>
-            <input fact="player" name="player" type="com.lapots.breed.judge.domain.Player" access="private"/> <!-- @Given("player") private Player player -->
-            <input fact="closestLevel" name="closestLevel" type="int" access="private"/> <!-- @Given("player") private int closestLevel -->
-            <input fact="maxLevel" name="maxLevel" type="int" access="private"/> <!-- @Given("player") private int maxLevel -->
+            <input fact="player" name="player" type="com.lapots.breed.judge.domain.Player" access="private"/>
+            <input fact="closestLevel" name="closestLevel" type="int" access="private"/>
+            <input fact="maxLevel" name="maxLevel" type="int" access="private"/>
         </inputs>
         <execution>
             <when>
@@ -28,10 +28,8 @@
                 </conditions>
             </when>
             <then>
-                <!-- code means direct Java code -->
                 <code>player.setLevel(player.getLevel() + 1);</code>
             </then>
-            <!-- move to [when] block -->
             <bindings>
                 <binding type="and">
                     <condition>cond_1</condition>

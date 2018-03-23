@@ -39,9 +39,6 @@ class BytecodeClassGenerator implements IClassGenerator {
                 "int"       : "java.lang.Integer"
         ]
 
-        /** the goal is to generate
-          {@link com.lapots.breed.judge.domain.rule.LevelUpRule}
-         */
         def generateClassForRule(Rule rule, ClassLoader classLoader) {
             // generate class skeleton
             DynamicType.Builder<?> dynamicType = genClassSkeleton((String) rule.name)

@@ -99,33 +99,29 @@ class GroovyTemplateClassGenerator implements IClassGenerator {
         def bindings = rule.execution.bindings
         def when = rule.execution.when
 
-        // TODO: investigate detailed flow
         def conditions = when.conditions.groupBy { it.id }
+        println conditions
         def processedConditions = conditions.collectEntries { k, v ->
             def code = ""
 
-            def leftBlock = v.left[0]
+            // due to grouping it creates pairs with k : [v]
+            def leftBlock = v[0].left
             if (leftBlock.code) { code += leftBlock.code }
 
-            println v.type[0] // TODO: investigate list
-            def operator = conditionsMap[v.type[0]]
+            println v[0].type
+            def operator = conditionsMap[v[0].type]
             code += " " + operator + " "
 
-            def rightBlock = v.right[0]
+            def rightBlock = v[0].right
             if (rightBlock.code) { code += rightBlock.code }
-
-            println code
 
             [k, code]
         }
 
         // single record I presume
         def result = bindings.collect { b ->
-            def type = " " + bindingsMap[b.type] + " "
-            b.conditions.collect { cond_id ->
-                // TODO: investigate
-                processedConditions[cond_id.text()]
-            }.join(type)
+            def type = " ${ bindingsMap[b.type] } "
+            b.conditions.collect { processedConditions[it] }.join(type)
         }
 
         map["lhs"] = result[0] + ";"
