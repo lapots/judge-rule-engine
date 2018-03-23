@@ -55,7 +55,7 @@ class RuleParser {
                 condition
             }
 
-            exec.bindings = rule.execution.bindings.binding.collect {
+            exec.bindings = rule.execution.when.bindings.binding.collect {
                 def binding = new Binding(type: it.@type.text())
                 binding.conditions = it.condition.collect { it.text() }
                 binding
