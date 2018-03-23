@@ -4,24 +4,14 @@ import com.google.common.base.CaseFormat
 import com.lapots.breed.judge.rulebook.core.generator.api.IClassGenerator
 import com.lapots.breed.judge.rulebook.domain.Rule
 import com.lapots.breed.judge.rulebook.domain.data.Input
+import groovy.json.JsonSlurper
 import groovy.text.SimpleTemplateEngine
+
+import static com.lapots.breed.judge.rulebook.core.util.XmlProcessingUtils.readResource
 
 class GroovyTemplateClassGenerator implements IClassGenerator {
 
-    private static final PACKAGE = "com.lapots.breed.judge.domain.rule"
-
-    def bindingsMap = [
-            "and" : "&&"
-    ]
-
-    def typesMap = [
-            "player" : "com.lapots.breed.judge.domain.Player"
-    ]
-
-    def conditionsMap = [
-            "not_equals" : "!=",
-            "less_than" : "<"
-    ]
+    def mapping = new JsonSlurper().parseText(readResource("/mapping.json"))
 
     @Override
     Class<?> generateRule(Rule rule) {
@@ -51,7 +41,7 @@ class GroovyTemplateClassGenerator implements IClassGenerator {
     }
 
     def private populateCommon(map, Rule rule) {
-        map["pkg"] = PACKAGE
+        map["pkg"] = mapping.default_package
         map["ruleName"] = rule.name
 
         String className = rule.name.replaceAll(" ", "_").toUpperCase()
@@ -66,7 +56,7 @@ class GroovyTemplateClassGenerator implements IClassGenerator {
         def imports = rule.inputs.collect { it.type }
         imports += rule.outputs.collect { it.type }
         imports = imports.findAll { !(it ==~ /java.lang.*/) && !(it ==~ /int/) } // find better way
-        imports = imports.collect { typesMap[it] }
+        imports = imports.collect { mapping.types."$it" }
         imports = imports.unique()
         map["objectImports"] = imports
 
@@ -91,7 +81,7 @@ class GroovyTemplateClassGenerator implements IClassGenerator {
             }
             // all needed fields are the same for both objects
             def anyType = entry.value[0]
-            def importType = typesMap[anyType.type] ? typesMap[anyType.type] : anyType.type
+            def importType = mapping.types."$anyType.type" ? mapping.types."$anyType.type" : anyType.type
             def output = annotations.join(' ')
             output += " $anyType.access ${ importType.substring(importType.lastIndexOf('.') + 1) } $anyType.name;"
         }
@@ -112,7 +102,7 @@ class GroovyTemplateClassGenerator implements IClassGenerator {
             def leftBlock = v[0].left
             if (leftBlock.code) { code += leftBlock.code }
 
-            def operator = conditionsMap[v[0].type]
+            def operator = mapping.conditions."${ v[0].type }"
             code += " " + operator + " "
 
             def rightBlock = v[0].right
@@ -123,7 +113,7 @@ class GroovyTemplateClassGenerator implements IClassGenerator {
 
         // single record I presume
         def result = bindings.collect { b ->
-            def type = " ${ bindingsMap[b.type] } "
+            def type = " ${ mapping.bindings."$b.type" } "
             b.conditions.collect { processedConditions[it] }.join(type)
         }
 

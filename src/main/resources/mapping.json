@@ -1,0 +1,13 @@
+{
+  "default_package" : "com.lapots.breed.judge.domain.rule",
+  "bindings": {
+    "and" : "&&"
+  },
+  "types": {
+    "player" : "com.lapots.breed.judge.domain.Player"
+  },
+  "conditions": {
+    "not_equals" : "!=",
+    "less_than" : "<"
+  }
+}

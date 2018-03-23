@@ -14,6 +14,7 @@ def ruleParser = new RuleParser()
 def rules = ruleParser.parseRules("/level_up_rule.xml", true)
 def rule = rules[0]
 templateCodeGeneratorSample(rule)
+
 def templateCodeGeneratorSample(rule) {
     RuleAdapter loadedRule = XmlRuleLoader.loadRule(new GroovyTemplateClassGenerator(), rule)
     RuleBook ruleBook = RuleBookBuilder.create().addRule(loadedRule).build()
