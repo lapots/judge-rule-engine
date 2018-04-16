@@ -40,8 +40,10 @@ repositories {
     maven {
         url "s3://repo.mvn.dev/release"
         credentials(AwsCredentials) {
-            accessKey = aws_access_key_id
-            secretKey = aws_secret_access_key
+            accessKey = project.hasProperty('aws_access_key_id') ?
+                    aws_access_key_id : System.getenv('aws_access_key_id')
+            secretKey = project.hasProperty('aws_secret_access_key') ?
+                    aws_secret_access_key : System.getenv('aws_secret_access_key')
         }
     }
 }
