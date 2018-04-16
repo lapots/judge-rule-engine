@@ -13,6 +13,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 /**
  * Configuration for performance monitoring.
  */
+// TODO:doesn't work for now
 @Configuration
 @EnableAspectJAutoProxy
 @Aspect

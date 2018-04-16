@@ -1,0 +1,5 @@
+{
+  "mapping": {
+    "player": "com.lapots.breed.judge.domain.Player"
+  }
+}

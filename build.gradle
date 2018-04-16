@@ -37,6 +37,13 @@ repositories {
     jcenter()
     maven { url "https://repo.spring.io/snapshot" }
     maven { url "https://repo.spring.io/milestone" }
+    maven {
+        url "s3://repo.mvn.dev/release"
+        credentials(AwsCredentials) {
+            accessKey = aws_access_key_id
+            secretKey = aws_secret_access_key
+        }
+    }
 }
 
 dependencies {
@@ -56,6 +63,8 @@ dependencies {
     compile('net.bytebuddy:byte-buddy:1.8.0')
 
     compile('com.google.guava:guava:24.1-jre')
+
+    compile('com.lapots.breed.rule:xml-rule-parser:0.5.4')
 
     compileOnly('org.projectlombok:lombok')
 

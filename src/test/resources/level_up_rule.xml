@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rules>
+    <rule name="level up rule runtime">
+        <inputs>
+            <input fact="player" name="player" type="player" access="private"/>
+            <input fact="closestLevel" name="closestLevel" type="int" access="private"/>
+            <input fact="maxLevel" name="maxLevel" type="int" access="private"/>
+        </inputs>
+        <execution>
+            <when>
+                <conditions>
+                    <condition id="cond_1" type="not_equals">
+                        <left>
+                            <code>player.getLevel()</code>
+                        </left>
+                        <right>
+                            <code>closestLevel</code>
+                        </right>
+                    </condition>
+                    <condition id="cond_2" type="less_than">
+                        <left>
+                            <code>player.getLevel()</code>
+                        </left>
+                        <right>
+                            <code>maxLevel</code>
+                        </right>
+                    </condition>
+                </conditions>
+                <bindings>
+                    <binding type="and">
+                        <condition>cond_1</condition>
+                        <condition>cond_2</condition>
+                    </binding>
+                </bindings>
+            </when>
+            <then>
+                <code>player.setLevel(player.getLevel() + 1);</code>
+            </then>
+        </execution>
+        <outputs>
+            <output name="player" type="player" access="private"/>
+        </outputs>
+    </rule>
+</rules>

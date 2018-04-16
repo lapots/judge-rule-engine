@@ -1,7 +1,7 @@
 package com.lapots.breed.judge;
 
+import com.deliveredtechnologies.rulebook.lang.RuleBookBuilder;
 import com.deliveredtechnologies.rulebook.model.RuleBook;
-import com.deliveredtechnologies.rulebook.model.runner.RuleBookRunner;
 import com.lapots.breed.judge.domain.Player;
 import com.lapots.breed.judge.domain.PlayerLevel;
 import com.lapots.breed.judge.repository.PlayerLevelRepository;
@@ -47,6 +47,6 @@ public class WebConfig {
      */
     @Bean
     public RuleBook ruleBook() {
-        return new RuleBookRunner("com.lapots.breed.judge.domain.rule");
+        return RuleBookBuilder.create().build();
     }
 }
