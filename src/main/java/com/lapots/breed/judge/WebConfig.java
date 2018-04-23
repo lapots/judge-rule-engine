@@ -7,10 +7,7 @@ import com.lapots.breed.judge.domain.Player;
 import com.lapots.breed.judge.domain.PlayerLevel;
 import com.lapots.breed.judge.repository.PlayerLevelRepository;
 import com.lapots.breed.judge.repository.PlayerRepository;
-import com.lapots.breed.rule.builder.RuleClassGenerator;
-import com.lapots.breed.rule.compiler.OpenhftCachedCompiler;
-import com.lapots.breed.rule.generator.wrapper.ClassGeneratorWrapper;
-import com.lapots.breed.rule.parser.DefaultRuleParser;
+import com.lapots.breed.judge.utils.RuleBuildingUtils;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -66,12 +63,8 @@ public class WebConfig {
     @Bean
     public CommandLineRunner initRuleEngine(final RuleBook ruleBook) {
         return args -> {
-            List<Class<?>> rules = new RuleClassGenerator()
-                    .withBuilderType(RuleClassGenerator.BuilderType.FILE)
-                    .withClassLoader(this.getClass().getClassLoader())
-                    .withCompiler(new OpenhftCachedCompiler())
-                    .withGenerator(new ClassGeneratorWrapper())
-                    .withParser(new DefaultRuleParser())
+            List<Class<?>> rules = RuleBuildingUtils
+                    .defaultFileGenerator()
                     .generate("level_up_rule.xml");
             rules.stream().map(ruleClass -> {
                 try {
