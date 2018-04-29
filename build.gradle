@@ -115,10 +115,12 @@ jacocoTestReport {
     }
 }
 
-task zipSources(type: Zip, dependsOn: clean) {
-    from project.rootDir
-    includes = ['*', '*/**/*']
-    excludes = ['*/test', 'latest.zip', '.travis.yml', '.gradle', '.git', '.idea', '.iml']
+task zipSources(type: Zip, dependsOn: build) {
+    from jar.archivePath
+    rename {
+        'application.jar'
+    }
     archiveName 'latest.zip'
     destinationDir project.rootDir
 }
+zipSources.mustRunAfter(build)
