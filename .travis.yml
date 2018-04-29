@@ -13,7 +13,7 @@ script:
 - "./gradlew sonarqube --stacktrace"
 after_success:
 - "./gradlew jacocoTestReport coveralls"
-- "./gradlew clean"
+- "./gradlew clean" # TODO: investigate need
 - "./gradlew zipSources"
 env:
   global:
